@@ -39,10 +39,10 @@ fi
 touch /boot/forcefsck
 
 # Perform backup
-dd if=/dev/mmcblk0 of=$backup_path/$HOSTNAME.$(date +%Y%m%d).img bs=1M
+dd bs=1M if=/dev/mmcblk0 | gzip > $backup_path/$HOSTNAME.$(date +%Y%m%d).img.gz
 
 # Remove fsck trigger
 rm /boot/forcefsck
 
 # Delete old backups
-find $backup_path/$HOSTNAME.*.img -mtime +$retention_days -type f -delete 
+find $backup_path/$HOSTNAME.*.img.gz -mtime +$retention_days -type f -delete 
